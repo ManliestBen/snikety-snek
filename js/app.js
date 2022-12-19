@@ -86,9 +86,11 @@ function generateBoard() {
 function renderBoard(boardObjs) {
   squareEls.forEach((el, idx) => {
     if (boardObjs[idx].snakeHead) {
-      el.style.backgroundColor = 'green'
+      el.style.backgroundColor = 'lightgreen'
+      el.textContent = '🐍'
     } if (boardObjs[idx].apple) {
-      el.style.backgroundColor =  'red'
+      el.style.backgroundColor =  'lightpink'
+      el.textContent = '🍎'
     } else if (!boardObjs[idx].snakeHead && !boardObjs[idx].apple) {
       el.style.backgroundColor = ''
     }
