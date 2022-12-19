@@ -89,6 +89,8 @@ function renderBoard(boardObjs) {
       el.style.backgroundColor = 'green'
     } if (boardObjs[idx].apple) {
       el.style.backgroundColor =  'red'
+    } else if (!boardObjs[idx].snakeHead && !boardObjs[idx].apple) {
+      el.style.backgroundColor = ''
     }
   })
 }
