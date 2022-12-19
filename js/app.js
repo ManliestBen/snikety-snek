@@ -16,6 +16,7 @@ function startGame() {
     adjustSnakeHeadPos()
     console.log(snakeHeadIdx, 'snakeheadidx')
     console.log(currentDir, 'currentdir')
+    generateBoard()
   }, 1000)
 }
 
@@ -40,16 +41,16 @@ function changeDirection(evt) {
 }
 
 function adjustSnakeHeadPos() {
-  if (currentDir = 'n') {
-    snakeHeadIdx = snakeHeadIdx + 16 
+  if (currentDir === 'n') {
+    snakeHeadIdx = snakeHeadIdx - 16 
   }
-  if (currentDir = 'e') {
+  if (currentDir === 'e') {
     snakeHeadIdx = snakeHeadIdx + 1
   }
-  if (currentDir = 's') {
-    snakeHeadIdx = snakeHeadIdx - 16
+  if (currentDir === 's') {
+    snakeHeadIdx = snakeHeadIdx + 16
   }
-  if (currentDir = 'w') {
+  if (currentDir === 'w') {
     snakeHeadIdx = snakeHeadIdx -1
   }
 }
