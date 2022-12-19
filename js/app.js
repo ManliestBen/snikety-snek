@@ -3,7 +3,9 @@ let snakeHeadIdx, appleIdx, currentDir, moveInterval
 document.querySelector('body').addEventListener('keydown', changeDirection)
 
 let squareEls = document.querySelectorAll('.sqr')
+
 init()
+
 function init() {
   snakeHeadIdx = pickRandomSnakeLoc()
   appleIdx = generateApple()
@@ -17,7 +19,7 @@ function startGame() {
     console.log(snakeHeadIdx, 'snakeheadidx')
     console.log(currentDir, 'currentdir')
     generateBoard()
-  }, 1000)
+  }, 100)
 }
 
 function changeDirection(evt) {
