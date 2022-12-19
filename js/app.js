@@ -93,6 +93,7 @@ function renderBoard(boardObjs) {
       el.textContent = '🍎'
     } else if (!boardObjs[idx].snakeHead && !boardObjs[idx].apple) {
       el.style.backgroundColor = ''
+      el.textContent = ''
     }
   })
 }
