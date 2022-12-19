@@ -1,0 +1,21 @@
+body {
+  height: 90vmin;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sqr-row {
+  display: flex;
+}
+
+.sqr {
+  width: 25px;
+  height: 25px;
+  border: 1px solid black;
+}
+
+button {
+  margin: 10px;
+}
