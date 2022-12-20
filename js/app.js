@@ -1,7 +1,9 @@
+import * as audio from './audio.js'
+
 let snakeHeadIdx, appleIdx, currentDir, moveInterval, snakeBody
 
-document.querySelector('body').addEventListener('keydown', changeDirection)
 
+document.querySelector('body').addEventListener('keydown', changeDirection)
 
 
 let squareEls = document.querySelectorAll('.sqr')
@@ -92,6 +94,7 @@ function generateApple() {
 
 function checkForSnakeOnApple() {
   if (snakeHeadIdx === appleIdx) {
+    audio.playAppleSound()
     snakeBody.push(appleIdx)
     appleIdx = generateApple()
   }
@@ -100,6 +103,7 @@ function checkForSnakeOnApple() {
 function checkForCollision() {
   console.log(squareEls[snakeHeadIdx].className)
   if (squareEls[snakeHeadIdx].classList.contains('edge')) {
+    audio.playCollisionSound()
     console.log('GAME OVER, COLLISION')
     return true
   }
