@@ -2,6 +2,8 @@ let snakeHeadIdx, appleIdx, currentDir, moveInterval
 
 document.querySelector('body').addEventListener('keydown', changeDirection)
 
+
+
 let squareEls = document.querySelectorAll('.sqr')
 
 init()
@@ -15,11 +17,15 @@ function init() {
 
 function startGame() {
   moveInterval = setInterval(() => {
+    if (checkForCollision()) {
+      clearInterval(moveInterval)
+      return
+    }
     adjustSnakeHeadPos()
     console.log(snakeHeadIdx, 'snakeheadidx')
     console.log(currentDir, 'currentdir')
     generateBoard()
-  }, 100)
+  }, 500)
 }
 
 function changeDirection(evt) {
@@ -44,13 +50,13 @@ function changeDirection(evt) {
 
 function adjustSnakeHeadPos() {
   if (currentDir === 'n') {
-    snakeHeadIdx = snakeHeadIdx - 16 
+    snakeHeadIdx = snakeHeadIdx - 18 
   }
   if (currentDir === 'e') {
     snakeHeadIdx = snakeHeadIdx + 1
   }
   if (currentDir === 's') {
-    snakeHeadIdx = snakeHeadIdx + 16
+    snakeHeadIdx = snakeHeadIdx + 18
   }
   if (currentDir === 'w') {
     snakeHeadIdx = snakeHeadIdx -1
@@ -67,6 +73,14 @@ function generateApple() {
 
 function checkForSnakeOnApple() {
 
+}
+
+function checkForCollision() {
+  console.log(squareEls[snakeHeadIdx].className)
+  if (squareEls[snakeHeadIdx].classList.contains('edge')) {
+    console.log('GAME OVER, COLLISION')
+    return true
+  }
 }
 
 function growSnake() {
