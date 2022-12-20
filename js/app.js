@@ -64,11 +64,19 @@ function adjustSnakeHeadPos() {
 }
 
 function pickRandomSnakeLoc() {
-  return Math.floor(Math.random() * squareEls.length)
+  let idxToPlaceSnake 
+  while(!idxToPlaceSnake || squareEls[idxToPlaceSnake].classList.contains('edge')) {
+    idxToPlaceSnake = Math.floor(Math.random() * squareEls.length)
+  }
+  return idxToPlaceSnake
 }
 
 function generateApple() {
-  return Math.floor(Math.random() * squareEls.length)
+  let idxToPlaceApple
+  while(!idxToPlaceApple || squareEls[idxToPlaceApple].classList.contains('edge')) {
+    idxToPlaceApple = Math.floor(Math.random() * squareEls.length)
+  }
+  return idxToPlaceApple
 }
 
 function checkForSnakeOnApple() {
