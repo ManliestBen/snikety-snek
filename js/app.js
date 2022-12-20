@@ -1,4 +1,4 @@
-let snakeHeadIdx, appleIdx, currentDir, moveInterval
+let snakeHeadIdx, appleIdx, currentDir, moveInterval, snakeBody
 
 document.querySelector('body').addEventListener('keydown', changeDirection)
 
@@ -12,6 +12,7 @@ function init() {
   snakeHeadIdx = pickRandomSnakeLoc()
   appleIdx = generateApple()
   currentDir = null
+  snakeBody = []
   generateBoard()
 }
 
@@ -21,11 +22,21 @@ function startGame() {
       clearInterval(moveInterval)
       return
     }
+    checkForSnakeOnApple()
     adjustSnakeHeadPos()
     console.log(snakeHeadIdx, 'snakeheadidx')
     console.log(currentDir, 'currentdir')
     generateBoard()
-  }, 500)
+    adjustSnakeBody()
+  }, 300)
+}
+
+function adjustSnakeBody() {
+  if (snakeBody.length) {
+    snakeBody.unshift(snakeHeadIdx)
+    snakeBody.pop()
+  }
+  console.log(snakeBody)
 }
 
 function changeDirection(evt) {
@@ -80,7 +91,10 @@ function generateApple() {
 }
 
 function checkForSnakeOnApple() {
-
+  if (snakeHeadIdx === appleIdx) {
+    snakeBody.push(appleIdx)
+    appleIdx = generateApple()
+  }
 }
 
 function checkForCollision() {
@@ -100,7 +114,8 @@ function generateBoard() {
   squareEls.forEach((el, idx) => {
     let boardObj = {
       snakeHead: snakeHeadIdx === idx ? true : false,
-      apple: appleIdx === idx ? true : false
+      apple: appleIdx === idx ? true : false,
+      snakeBod: snakeBody.includes(idx) ? true : false
     }
     boardObjs.push(boardObj)
   })
@@ -112,9 +127,12 @@ function renderBoard(boardObjs) {
     if (boardObjs[idx].snakeHead) {
       el.style.backgroundColor = 'lightgreen'
       el.textContent = '🐍'
-    } if (boardObjs[idx].apple) {
+    } else if (boardObjs[idx].apple) {
       el.style.backgroundColor =  'lightpink'
       el.textContent = '🍎'
+    } else if (boardObjs[idx].snakeBod) {
+      el.style.backgroundColor =  'lightgreen'
+      el.textContent = ''
     } else if (!boardObjs[idx].snakeHead && !boardObjs[idx].apple) {
       el.style.backgroundColor = ''
       el.textContent = ''
