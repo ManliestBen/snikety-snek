@@ -2,9 +2,7 @@ import * as audio from './audio.js'
 
 let snakeHeadIdx, appleIdx, currentDir, moveInterval, snakeBody
 
-
 document.querySelector('body').addEventListener('keydown', changeDirection)
-
 
 let squareEls = document.querySelectorAll('.sqr')
 
@@ -20,14 +18,16 @@ function init() {
 
 function startGame() {
   moveInterval = setInterval(() => {
-    if (checkForCollision()) {
+    if (checkForEdgeCollision()) {
       clearInterval(moveInterval)
       return
     }
     checkForSnakeOnApple()
     adjustSnakeHeadPos()
-    console.log(snakeHeadIdx, 'snakeheadidx')
-    console.log(currentDir, 'currentdir')
+    if (checkForBodyCollision()) {
+      clearInterval(moveInterval)
+      return
+    }
     generateBoard()
     adjustSnakeBody()
   }, 300)
@@ -38,25 +38,19 @@ function adjustSnakeBody() {
     snakeBody.unshift(snakeHeadIdx)
     snakeBody.pop()
   }
-  console.log(snakeBody)
 }
 
 function changeDirection(evt) {
   if (!moveInterval) {
     startGame()
   }
-  console.log(evt.key)
   if (evt.key === 'ArrowUp') {
-    console.log('up pressed')
     currentDir = 'n'
   } else if (evt.key === 'ArrowRight') {
-    console.log('right pressed')
     currentDir = 'e'
   } else if (evt.key === 'ArrowDown') {
-    console.log('down pressed')
     currentDir = 's'
   } else if (evt.key === 'ArrowLeft') {
-    console.log('left pressed')
     currentDir = 'w'
   }
 }
@@ -100,17 +94,18 @@ function checkForSnakeOnApple() {
   }
 }
 
-function checkForCollision() {
-  console.log(squareEls[snakeHeadIdx].className)
+function checkForEdgeCollision() {
   if (squareEls[snakeHeadIdx].classList.contains('edge')) {
     audio.playCollisionSound()
-    console.log('GAME OVER, COLLISION')
     return true
   }
 }
 
-function growSnake() {
-
+function checkForBodyCollision() {
+  if (snakeBody.includes(snakeHeadIdx)) {
+    audio.playCollisionSound()
+    return true
+  }
 }
 
 function generateBoard() {
